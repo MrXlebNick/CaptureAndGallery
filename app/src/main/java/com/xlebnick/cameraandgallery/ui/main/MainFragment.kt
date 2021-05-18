@@ -15,7 +15,7 @@ import com.xlebnick.cameraandgallery.ui.base.BaseFragment
 import com.xlebnick.cameraandgallery.utils.PermissionHelper
 import javax.inject.Inject
 
-class MainFragment : BaseFragment() {
+class MainFragment : BaseFragment<MainFragmentBinding>() {
 
     @Inject
     lateinit var cameraHelper: CameraHelper
@@ -24,7 +24,6 @@ class MainFragment : BaseFragment() {
     lateinit var permissionHelper: PermissionHelper
 
     private val viewModel: MainViewModel by viewModels { viewModelFactory }
-    private var binding: MainFragmentBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,10 +78,5 @@ class MainFragment : BaseFragment() {
 
     private fun maybeShowGalleryButton() {
         binding?.galleryButton?.visibility = if (viewModel.shouldShowGalleryButton()) View.VISIBLE else View.GONE
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        binding = null
     }
 }
