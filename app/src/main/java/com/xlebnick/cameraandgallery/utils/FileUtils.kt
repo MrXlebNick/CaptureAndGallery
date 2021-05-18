@@ -37,4 +37,6 @@ class FileUtils @Inject constructor(private val context: Context) {
         )
         return ImageCapture.OutputFileOptions.Builder(photoFile).build()
     }
+
+    fun isOutputDirectoryEmpty(): Boolean = getOutputDirectory().listFiles().isNullOrEmpty()
 }

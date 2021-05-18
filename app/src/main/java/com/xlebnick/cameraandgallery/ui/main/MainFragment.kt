@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.xlebnick.cameraandgallery.R
 import com.xlebnick.cameraandgallery.camerautils.CameraHelper
@@ -22,7 +23,7 @@ class MainFragment : BaseFragment() {
     @Inject
     lateinit var permissionHelper: PermissionHelper
 
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModels { viewModelFactory }
     private var binding: MainFragmentBinding? = null
 
     override fun onCreateView(
@@ -35,6 +36,8 @@ class MainFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        maybeShowGalleryButton()
 
         cameraHelper.bindToLifecycleOwner(viewLifecycleOwner)
 
@@ -50,12 +53,12 @@ class MainFragment : BaseFragment() {
         // Set up the listener for take photo button
         binding?.cameraCaptureButton?.setOnClickListener {
             cameraHelper.takePhoto()
+            maybeShowGalleryButton()
         }
-    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        binding?.galleryButton?.setOnClickListener {
+            navControllerHelper.navigateTo(MainFragmentDirections.actionMainFragmentToGalleryFragment())
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -72,6 +75,10 @@ class MainFragment : BaseFragment() {
             ).show()
             requireActivity().finish()
         }
+    }
+
+    private fun maybeShowGalleryButton() {
+        binding?.galleryButton?.visibility = if (viewModel.shouldShowGalleryButton()) View.VISIBLE else View.GONE
     }
 
     override fun onDestroy() {

@@ -19,6 +19,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:elevation="2dp" />
 
+    <Button
+        android:id="@+id/galleryButton"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="50dp"
+        android:scaleType="fitCenter"
+        android:text="@string/to_gallery"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/cameraCaptureButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone"/>
+
     <androidx.camera.view.PreviewView
         android:id="@+id/viewFinder"
         android:layout_width="match_parent"

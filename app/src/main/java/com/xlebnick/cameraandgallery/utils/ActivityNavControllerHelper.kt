@@ -38,13 +38,7 @@ open class NavControllerHelper {
      * Performs navigation to the specified NavDirections with the animations from bottom or from left.
      *
      * @param direction target navigation destination
-     * @param fromBottom if true, enter animation will appear sliding from bottom, if false - from right; pop exit animation is sliding off towards bottom if true, towards right if false
-     * @param fromBottomBackNullable similar to <code>fromBottom</code>, but for pop exit animation only; if null, <code>fromBottom</code> will decide the animation
      * @param popupToOptions Provide a pair of destination id and inclusive
-     *
-     * TODO: use enum class for fromBottom, fromBottomBackNullable.
-     * TODO: Because this function is duplicated into many classes, it would make sense to create a
-     *       class Parameters that contains the following arguments.
      */
     fun navigateTo(
         direction: NavDirections,

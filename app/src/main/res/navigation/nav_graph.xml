@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
     app:startDestination="@id/main_fragment">
 
     <fragment
         android:id="@+id/main_fragment"
         android:name="com.xlebnick.cameraandgallery.ui.main.MainFragment"
-        android:layout="@layout/main_fragment" />
+        tools:layout="@layout/main_fragment" >
+        <action
+            android:id="@+id/action_main_fragment_to_gallery_fragment"
+            app:destination="@id/gallery_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gallery_fragment"
+        android:name="com.xlebnick.cameraandgallery.ui.GalleryFragment"
+        tools:layout="@layout/gallery_fragment" />
 
 
 </navigation>
