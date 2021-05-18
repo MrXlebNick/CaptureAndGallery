@@ -15,6 +15,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import com.xlebnick.cameraandgallery.R
+import com.xlebnick.cameraandgallery.utils.FileUtils
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -22,39 +23,19 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import javax.inject.Inject
 
-class CameraHelper @Inject constructor(private val context: Context) : LifecycleObserver {
-
-    companion object {
-        private const val TAG = "CameraXBasic"
-        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
-    }
+class CameraHelper @Inject constructor(
+    private val context: Context,
+    private val fileUtils: FileUtils
+) : LifecycleObserver {
 
     private var imageCapture: ImageCapture? = null
-
-    private lateinit var outputDirectory: File
-    private lateinit var cameraExecutor: ExecutorService
+    private var cameraExecutor: ExecutorService = Executors.newSingleThreadExecutor()
 
     private var lifecycleOwner: LifecycleOwner? = null
-
-    init {
-        outputDirectory = getOutputDirectory()
-        cameraExecutor = Executors.newSingleThreadExecutor()
-    }
 
     fun bindToLifecycleOwner(lifecycleOwner: LifecycleOwner) {
         this.lifecycleOwner = lifecycleOwner
         lifecycleOwner.lifecycle.addObserver(this)
-    }
-
-    @Suppress("DEPRECATION")
-    private fun getOutputDirectory(): File {
-        val mediaDir = context.externalMediaDirs?.firstOrNull()?.let {
-            File(it, context.resources.getString(R.string.app_name)).apply { mkdirs() }
-        }
-        return if (mediaDir != null && mediaDir.exists())
-            mediaDir
-        else
-            context.filesDir
     }
 
     fun startCamera(surfaceProvider: Preview.SurfaceProvider?) {
@@ -85,10 +66,11 @@ class CameraHelper @Inject constructor(private val context: Context) : Lifecycle
 
                 // Bind use cases to camera
                 cameraProvider.bindToLifecycle(
-                    lifecycleOwner, cameraSelector, preview, imageCapture)
+                    lifecycleOwner, cameraSelector, preview, imageCapture
+                )
 
-            } catch(exc: Exception) {
-                Log.e(TAG, "Use case binding failed", exc)
+            } catch (exc: Exception) {
+                Log.e("***", "Use case binding failed", exc)
             }
 
         }, ContextCompat.getMainExecutor(context))
@@ -99,28 +81,23 @@ class CameraHelper @Inject constructor(private val context: Context) : Lifecycle
         // Get a stable reference of the modifiable image capture use case
         val imageCapture = imageCapture ?: return
 
-        // Create time-stamped output file to hold the image
-        val photoFile = File(
-            outputDirectory,
-            SimpleDateFormat(FILENAME_FORMAT, Locale.US
-            ).format(System.currentTimeMillis()) + ".jpg")
-
         // Create output options object which contains file + metadata
-        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+        val outputOptions = fileUtils.createImageCaptureOptions()
 
         // Set up image capture listener, which is triggered after photo has
         // been taken
         imageCapture.takePicture(
-            outputOptions, ContextCompat.getMainExecutor(context), object : ImageCapture.OnImageSavedCallback {
+            outputOptions,
+            ContextCompat.getMainExecutor(context),
+            object : ImageCapture.OnImageSavedCallback {
                 override fun onError(exc: ImageCaptureException) {
-                    Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
+                    Log.e("***", "Photo capture failed: ${exc.message}", exc)
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    val savedUri = Uri.fromFile(photoFile)
-                    val msg = "Photo capture succeeded: $savedUri"
+                    val msg = "Photo capture succeeded!"
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-                    Log.d(TAG, msg)
+                    Log.d("***", msg)
                 }
             })
     }
