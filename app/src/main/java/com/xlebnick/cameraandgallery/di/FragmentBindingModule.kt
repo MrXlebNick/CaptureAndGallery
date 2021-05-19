@@ -1,6 +1,6 @@
 package com.xlebnick.cameraandgallery.di
 
-import com.xlebnick.cameraandgallery.ui.GalleryFragment
+import com.xlebnick.cameraandgallery.ui.gallery.GalleryFragment
 import com.xlebnick.cameraandgallery.ui.main.MainFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector

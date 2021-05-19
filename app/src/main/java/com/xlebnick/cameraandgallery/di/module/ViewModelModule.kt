@@ -2,7 +2,7 @@ package com.xlebnick.cameraandgallery.di.module
 
 import androidx.lifecycle.ViewModel
 import com.xlebnick.cameraandgallery.di.ViewModelKey
-import com.xlebnick.cameraandgallery.ui.GalleryViewModel
+import com.xlebnick.cameraandgallery.ui.gallery.GalleryViewModel
 import com.xlebnick.cameraandgallery.ui.main.MainViewModel
 import dagger.Binds
 import dagger.Module

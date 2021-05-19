@@ -1,4 +1,4 @@
-package com.xlebnick.cameraandgallery.ui
+package com.xlebnick.cameraandgallery.ui.gallery
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel

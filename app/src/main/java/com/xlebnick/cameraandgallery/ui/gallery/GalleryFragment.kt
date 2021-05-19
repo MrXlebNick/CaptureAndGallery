@@ -1,4 +1,4 @@
-package com.xlebnick.cameraandgallery.ui
+package com.xlebnick.cameraandgallery.ui.gallery
 
 import android.content.Context
 import android.net.Uri
