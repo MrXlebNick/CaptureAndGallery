@@ -35,6 +35,5 @@ class SharedPrefsRepository @Inject constructor(context: Context) {
     fun getNotes(): Map<String, String?> {
         val savedFiles = sharedPreferences.getStringSet(SAVED_FILES_STRING_SET, setOf()) ?: setOf()
         return savedFiles.map { it to sharedPreferences.getString(it, null)  }.toMap()
-
     }
 }

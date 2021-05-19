@@ -69,7 +69,12 @@ class MainFragment : BaseFragment<MainFragmentBinding>() {
     }
 
     private fun showNotesDialog(uri: Uri) {
+        // save the file anyway, but no notes for now. If the notes are provided later, they will
+        // override the empty dummy
+        viewModel.saveNotes(uri, "")
+        // where to put notes
         val editText = EditText(context).apply { hint = context.getString(R.string.your_notes) }
+        // dialog with UI
         AlertDialog.Builder(requireActivity())
             .setTitle(R.string.add_notes)
             .setView(editText)
@@ -77,7 +82,7 @@ class MainFragment : BaseFragment<MainFragmentBinding>() {
                 viewModel.saveNotes(uri, editText.text.toString())
                 dialog.dismiss()
             }
-            .setNegativeButton(R.string.close) { _, _ -> }
+            .setNegativeButton(R.string.close) { _, _ -> /* do nothing */ }
             .show()
     }
 
