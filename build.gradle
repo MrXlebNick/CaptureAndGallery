@@ -5,6 +5,7 @@ buildscript {
         google()
         jcenter()
         mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
     def nav_version = "2.3.5"
 
@@ -23,6 +24,7 @@ allprojects {
         google()
         mavenCentral()
         jcenter() // Warning: this repository is going to shut down soon
+        maven { url 'https://jitpack.io' }
     }
 }
 

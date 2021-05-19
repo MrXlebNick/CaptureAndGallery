@@ -65,7 +65,7 @@ class GalleryAdapter(
 
         fun bind(item: GalleryItem, context: Context) {
             Glide.with(context)
-                .load(item.uri)
+                .load(Uri.parse(item.uri))
                 .transform(CenterCrop())
                 .into(binding.image)
 
@@ -83,4 +83,4 @@ class GalleryItemDiffCallback : DiffUtil.ItemCallback<GalleryItem>() {
     }
 }
 
-data class GalleryItem(val uri: Uri, val notes: String)
+data class GalleryItem(val uri: String, val notes: String)

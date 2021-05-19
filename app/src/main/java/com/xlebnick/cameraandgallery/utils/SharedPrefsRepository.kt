@@ -32,7 +32,7 @@ class SharedPrefsRepository @Inject constructor(context: Context) {
      * Retrieves saved notes
      * @return map, where key is the uri of the file and the value is the notes value for it (can be null)
      */
-    fun getNotes(): Map<String, String?> {
+    fun getFileNamesAndNotes(): Map<String, String?> {
         val savedFiles = sharedPreferences.getStringSet(SAVED_FILES_STRING_SET, setOf()) ?: setOf()
         return savedFiles.map { it to sharedPreferences.getString(it, null)  }.toMap()
     }
