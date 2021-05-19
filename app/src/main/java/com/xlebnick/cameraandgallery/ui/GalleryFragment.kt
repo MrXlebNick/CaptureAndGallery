@@ -68,6 +68,8 @@ class GalleryAdapter(
                 .load(item.uri)
                 .transform(CenterCrop())
                 .into(binding.image)
+
+            binding.text.text = item.notes
         }
     }
 }

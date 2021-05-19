@@ -3,4 +3,8 @@
     <string name="take_photo">Take Photo</string>
     <string name="permissions_not_granted">Permissions not granted by the user.</string>
     <string name="to_gallery">To gallery</string>
+    <string name="your_notes">Your notes</string>
+    <string name="add_notes">Add notes to this photo</string>
+    <string name="save">Save</string>
+    <string name="close">Close</string>
 </resources>

@@ -1,13 +1,16 @@
 package com.xlebnick.cameraandgallery.utils
 
 import android.content.Context
+import android.net.Uri
 import androidx.camera.core.ImageCapture
 import com.xlebnick.cameraandgallery.R
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class FileUtils @Inject constructor(private val context: Context) {
 
     companion object {
@@ -27,7 +30,7 @@ class FileUtils @Inject constructor(private val context: Context) {
             context.filesDir
     }
 
-    fun createImageCaptureOptions(): ImageCapture.OutputFileOptions {
+    fun createImageCaptureOptions(): Pair<ImageCapture.OutputFileOptions, Uri> {
         // Create time-stamped output file to hold the image
         val photoFile = File(
             outputDirectory,
@@ -35,7 +38,7 @@ class FileUtils @Inject constructor(private val context: Context) {
                 FILENAME_FORMAT, Locale.US
             ).format(System.currentTimeMillis()) + ".jpg"
         )
-        return ImageCapture.OutputFileOptions.Builder(photoFile).build()
+        return (ImageCapture.OutputFileOptions.Builder(photoFile).build() to Uri.fromFile(photoFile))
     }
 
     fun isOutputDirectoryEmpty(): Boolean = getOutputDirectory().listFiles().isNullOrEmpty()

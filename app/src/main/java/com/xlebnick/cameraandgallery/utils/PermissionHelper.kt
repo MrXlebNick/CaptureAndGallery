@@ -5,7 +5,9 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class PermissionHelper @Inject constructor(private val context: Context) {
 
     companion object {

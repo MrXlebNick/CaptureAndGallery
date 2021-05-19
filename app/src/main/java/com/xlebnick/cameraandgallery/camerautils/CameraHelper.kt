@@ -77,12 +77,12 @@ class CameraHelper @Inject constructor(
     }
 
 
-    fun takePhoto() {
+    fun takePhoto(onSuccess: (Uri) -> Unit) {
         // Get a stable reference of the modifiable image capture use case
         val imageCapture = imageCapture ?: return
 
         // Create output options object which contains file + metadata
-        val outputOptions = fileUtils.createImageCaptureOptions()
+        val (outputOptions, fileUri) = fileUtils.createImageCaptureOptions()
 
         // Set up image capture listener, which is triggered after photo has
         // been taken
@@ -95,9 +95,10 @@ class CameraHelper @Inject constructor(
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    val msg = "Photo capture succeeded!"
+                    val msg = "Photo captured at $fileUri!"
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
                     Log.d("***", msg)
+                    onSuccess(fileUri)
                 }
             })
     }
